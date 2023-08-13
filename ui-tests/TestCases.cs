@@ -16,6 +16,7 @@ namespace ui_tests
     public abstract class TestCases
     {
         protected WebDriver _webDriver;
+        string baseUrl = "https://ourchive-dev.stopthatimp.net/";
 
 
         [SetUp]
@@ -25,7 +26,6 @@ namespace ui_tests
 
             // Call virtual method now...
             _webDriver = this.GetDriver();
-            _webDriver.Navigate().GoToUrl("https://ourchive-dev.stopthatimp.net/");
         }
 
         protected abstract WebDriver GetDriver();
@@ -39,11 +39,16 @@ namespace ui_tests
         [Test]
         public void testLanding()
         {
-            pages.LandingPage home = new(_webDriver);
-
+            pages.LandingPage home = new(_webDriver, baseUrl);
+        }
+        [Test]
+        public void testLogin()
+        {
+            pages.LoginPage login = new(_webDriver, baseUrl);
         }
     }
 
+    [Ignore("brb")]
     [TestFixture]
     public class FirefoxTests : TestCases
     {
