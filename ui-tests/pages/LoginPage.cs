@@ -7,11 +7,8 @@ using WebDriverManager.DriverConfigs.Impl;
 
 namespace ui_tests.pages;
 
-public class LoginPage
+public class LoginPage : BasePage
 {
-    protected IWebDriver driver;
-    protected Uri base_url = new("https://ourchive-dev.stopthatimp.net/");
-    protected string url_segment = "";
 
     // LOCATORS
     private By contentHeading = By.Id("index-content-heading");
@@ -21,20 +18,21 @@ public class LoginPage
     private By navRightParent = By.XPath("//*[@id='uk-nav-right']/ul");
     private By footer = By.Id("sign_in");
 
-    public LoginPage(IWebDriver driver)
+
+    override protected string url_segment => "login";
+
+    public LoginPage(WebDriver _driver, string _instance_url) : base(_driver, _instance_url)
     {
-        this.driver = driver;
-        driver.Url = new Uri(base_url, url_segment).AbsoluteUri;
-        if (!(driver.Title == ("Ourchive")))
-        {
-            throw new OpenQA.Selenium.InvalidElementStateException("This is not the Landing Page," +
-                  " current page is: " + driver.Url);
-        }
     }
 
-    public LoginPage manageProfile()
+    public override bool validatePage()
     {
-        // Page encapsulation to manage profile functionality
-        return new LoginPage(driver);
+        if (this.driver.Title == ("Ourchive"))
+        {
+            return true;
+        }
+
+        return false;
     }
+
 }

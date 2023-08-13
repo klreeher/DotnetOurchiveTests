@@ -9,27 +9,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ui_tests.pages;
 
-public class LandingPage
+public abstract class BasePage
 {
     protected WebDriver? driver = null;
-    protected string url_segment = "";
+    protected abstract string url_segment { get; }
+    protected string instance_url;
 
-    // LOCATORS
-    private By contentHeading = By.Id("index-content-heading");
-    private By contentMessage = By.Id("index-content-message");
-    private By searchForm = By.Id("index-content-search-form");
-    private By navLeftParent = By.XPath("//*[@id='uk-nav-left']/ul");
-    private By navRightParent = By.XPath("//*[@id='uk-nav-right']/ul");
-    private By footer = By.Id("sign_in");
+    public abstract bool validatePage();
 
-    public LandingPage(WebDriver _driver, string _instance_url = "")
+    public BasePage(WebDriver _driver, string _instance_url = "")
     {
-        string? base_url;
+        this.instance_url = _instance_url;
         if (string.IsNullOrEmpty(_instance_url))
         {
             try
             {
-                base_url = Environment.GetEnvironmentVariable("BaseUrl");
+                this.instance_url = Environment.GetEnvironmentVariable("BaseUrl");
             }
             catch (Exception e)
             {
@@ -40,7 +35,7 @@ public class LandingPage
         else
         {
             Console.Write($"found instance url: {_instance_url}\n");
-            base_url = _instance_url;
+            this.instance_url = _instance_url;
         }
 
         if (this.driver is null)
@@ -49,22 +44,54 @@ public class LandingPage
             this.driver = _driver;
         }
 
-        var page_url = new Uri(new Uri(base_url), url_segment);
-        driver.Url = page_url.AbsoluteUri;
-
-
-        Console.Write($"\nPage Url: {page_url} from {base_url} and {this.url_segment}");
-
-        if (!(this.driver.Title == ("Ourchive")))
+        if (this.url_segment == string.Empty && this.instance_url is not null)
         {
-            throw new OpenQA.Selenium.InvalidElementStateException($"Expected the LandingPage to be at: {page_url}, however found: {driver.Url}");
+            var page_url = new Uri(this.instance_url);
+            driver.Url = page_url.AbsoluteUri;
+            Console.Write($"\nPage Url: {page_url} from {this.instance_url}");
+        }
+        else if (this.instance_url != null)
+        {
+            var page_url = new Uri(this.instance_url);
+            page_url = new Uri(page_url, url_segment);
+            driver.Url = page_url.AbsoluteUri;
+            Console.Write($"\nPage Url: {page_url} from {this.instance_url} and {this.url_segment}");
         }
 
+
+
+
+        Assert.IsTrue(this.validatePage());
+
     }
 
-    public LandingPage manageProfile()
+}
+
+public class LandingPage : BasePage
+{
+    // LOCATORS
+    private By contentHeading = By.Id("index-content-heading");
+    private By contentMessage = By.Id("index-content-message");
+    private By searchForm = By.Id("index-content-search-form");
+    private By navLeftParent = By.XPath("//*[@id='uk-nav-left']/ul");
+    private By navRightParent = By.XPath("//*[@id='uk-nav-right']/ul");
+    private By footer = By.Id("sign_in");
+
+
+    override protected string url_segment => "";
+
+    public LandingPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
     {
-        // Page encapsulation to manage profile functionality
-        return new LandingPage(driver);
     }
+
+    public override bool validatePage()
+    {
+        if (this.driver.Title == ("Ourchive"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }
