@@ -50,8 +50,11 @@ namespace ui_tests
         [Test]
         public void CanLoginPage()
         {
+            pages.LandingPage home = new(_webDriver, baseUrl);
             pages.LoginPage login = new(_webDriver, baseUrl);
             login.DoFillLoginForm("kate", "QJX.pgd!qwd4nqy.xwb", true);
+
+            home.loggedInUser("kate");
 
         }
     }

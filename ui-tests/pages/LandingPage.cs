@@ -30,6 +30,19 @@ public class LandingPage : BasePage
     };
 
 
+    private static By loginSuccess = By.Id("login-success");
+    private static By navUsername = By.Id("nav-username");
+
+    private List<By> loggedInElements = new List<By>(){
+        contentHeading,
+        contentMessage,
+        searchForm,
+        navLeftParent,
+        navRightParent,
+        footer
+    };
+
+
     override protected string url_segment => "";
 
     public LandingPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
@@ -48,5 +61,23 @@ public class LandingPage : BasePage
         Assert.IsTrue(this.driver.Url.Contains(this.url_segment), $"Expected {GetType().Name} Init Url to Contain `{this.url_segment}` but instead found `{this.driver.Url}`");
         return true;
     }
+
+
+    public void loggedInUser(string loggedInUser)
+    {
+        Console.WriteLine($"Expecting {loggedInUser}");
+
+        this.waitForLoad(this.driver, loginSuccess);
+
+        var userProfileMenu = this.driver.FindElement(navUsername);
+        Assert.IsTrue(userProfileMenu.Displayed, $"Expected userProfileMenu to display username of logged in user.");
+        Console.WriteLine(userProfileMenu.Text);
+        Assert.IsTrue(userProfileMenu.Text.Contains(loggedInUser.ToUpper()), $"Expected {loggedInUser.ToUpper()} but got {userProfileMenu.Text}");
+
+        // Page encapsulation to manage profile functionality
+        //return new LandingPage(this.driver);
+
+    }
+
 
 }
