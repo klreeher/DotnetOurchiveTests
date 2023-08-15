@@ -51,4 +51,25 @@ public class LoginPage : BasePage
         return true;
     }
 
+    public void DoFillLoginForm(string username, string password, bool do_submit)
+    {
+
+        var username_input = this.driver.FindElement(input_username);
+        var password_input = this.driver.FindElement(input_password);
+
+        username_input.Click();
+        username_input.SendKeys(username);
+
+        password_input.Click();
+        password_input.SendKeys(password);
+
+        if (do_submit)
+        {
+            var submit = this.driver.FindElement(submit_button);
+            submit.Click();
+        }
+    }
+
+
+
 }

@@ -37,18 +37,24 @@ namespace ui_tests
         }
 
         [Test]
-        public void testLanding()
+        public void LoadLandingPage()
         {
             pages.LandingPage home = new(_webDriver, baseUrl);
         }
         [Test]
-        public void testLogin()
+        public void LoadLoginPage()
         {
             pages.LoginPage login = new(_webDriver, baseUrl);
         }
-    }
 
-    [Ignore("brb")]
+        [Test]
+        public void CanLoginPage()
+        {
+            pages.LoginPage login = new(_webDriver, baseUrl);
+            login.DoFillLoginForm("kate", "QJX.pgd!qwd4nqy.xwb", true);
+
+        }
+    }
     [TestFixture]
     public class FirefoxTests : TestCases
     {
