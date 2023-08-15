@@ -105,7 +105,7 @@ public class LandingPage : BasePage
 
     public void ChangeTheme()
     {
-        this.driver.GetScreenshot().SaveAsFile("theme_01", ScreenshotImageFormat.Png);
+        this.driver.GetScreenshot().SaveAsFile("theme_01.png", ScreenshotImageFormat.Png);
         bool prior = IsThemeModeDark();
         this.driver.ExecuteScript("return switchTheme()");
         if (prior)
@@ -116,7 +116,7 @@ public class LandingPage : BasePage
         {
             this.waitForLoad(this.driver, darkThemeMode);
         }
-        this.driver.GetScreenshot().SaveAsFile("theme_02", ScreenshotImageFormat.Png);
+        this.driver.GetScreenshot().SaveAsFile("theme_02.png", ScreenshotImageFormat.Png);
 
     }
 
