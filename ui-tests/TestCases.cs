@@ -57,6 +57,17 @@ namespace ui_tests
             home.loggedInUser("kate");
 
         }
+
+        [Test]
+        public void CanToggleThemeMode()
+        {
+
+            pages.LandingPage home = new(_webDriver, baseUrl);
+            var darkMode = home.IsThemeModeDark();
+            home.ChangeTheme();
+
+
+        }
     }
     [TestFixture]
     public class FirefoxTests : TestCases

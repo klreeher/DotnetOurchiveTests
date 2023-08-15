@@ -5,6 +5,7 @@ using OpenQA.Selenium.Firefox;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium.Support.UI;
+using System.IO;
 
 
 namespace ui_tests.pages;
@@ -20,13 +21,26 @@ public class LandingPage : BasePage
     private static By navLeftParent = By.XPath("//*[@id='uk-nav-left']/ul");
     private static By navRightParent = By.XPath("//*[@id='uk-nav-right']/ul");
     private static By footer = By.XPath("//*[contains(@id,'ourchive-footer')]");
+
+    private static By login = By.Id("nav-login-link");
+    private static By register = By.Id("nav-register-link");
+    private static By searchIcon = By.XPath("//*[contains(@id,'uk-search-icon')]");
+
+
+
+    private static By themeModeToggle = By.XPath("//*[contains(@id,'theme-switcher')]");
+    private static By lightThemeMode = By.XPath("//span[@id='theme-switcher-light']");
+    private static By darkThemeMode = By.XPath("//span[@id='theme-switcher-dark']");
+
     private List<By> onLoadElements = new List<By>(){
         contentHeading,
         contentMessage,
         searchForm,
         navLeftParent,
         navRightParent,
-        footer
+        footer,
+        login,
+        register
     };
 
 
@@ -65,13 +79,10 @@ public class LandingPage : BasePage
 
     public void loggedInUser(string loggedInUser)
     {
-        Console.WriteLine($"Expecting {loggedInUser}");
-
         this.waitForLoad(this.driver, loginSuccess);
 
         var userProfileMenu = this.driver.FindElement(navUsername);
         Assert.IsTrue(userProfileMenu.Displayed, $"Expected userProfileMenu to display username of logged in user.");
-        Console.WriteLine(userProfileMenu.Text);
         Assert.IsTrue(userProfileMenu.Text.Contains(loggedInUser.ToUpper()), $"Expected {loggedInUser.ToUpper()} but got {userProfileMenu.Text}");
 
         // Page encapsulation to manage profile functionality
@@ -79,5 +90,34 @@ public class LandingPage : BasePage
 
     }
 
+    public bool IsThemeModeDark()
+    {
+        var toggleIcon = this.driver.FindElement(themeModeToggle);
+        Console.WriteLine($"Toggle Icon: {toggleIcon.Displayed} / {toggleIcon.GetAttribute("id")}");
+        if (toggleIcon.Displayed && (toggleIcon.GetAttribute("id").Contains("light")))
+        {
+            Console.WriteLine(toggleIcon.GetAttribute("title"));
+            return false;
+        }
+
+        return true;
+    }
+
+    public void ChangeTheme()
+    {
+        this.driver.GetScreenshot().SaveAsFile("theme_01", ScreenshotImageFormat.Png);
+        bool prior = IsThemeModeDark();
+        this.driver.ExecuteScript("return switchTheme()");
+        if (prior)
+        {
+            this.waitForLoad(this.driver, lightThemeMode);
+        }
+        else
+        {
+            this.waitForLoad(this.driver, darkThemeMode);
+        }
+        this.driver.GetScreenshot().SaveAsFile("theme_02", ScreenshotImageFormat.Png);
+
+    }
 
 }
