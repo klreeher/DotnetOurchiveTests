@@ -6,7 +6,7 @@ using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
-
+using OpenQA.Selenium.Interactions;
 
 namespace ui_tests.pages;
 
@@ -20,6 +20,8 @@ public class LandingPage : BasePage
     private static By searchForm = By.Id("index-content-search-form");
     private static By navLeftParent = By.XPath("//*[@id='uk-nav-left']/ul");
     private static By navRightParent = By.XPath("//*[@id='uk-nav-right']/ul");
+    private static By navUserDropdown = By.Id("nav-user-dropdown-ul");
+    private static By navUserListItems = By.XPath("//ul[@id='nav-user-dropdown-ul']/*");
     private static By footer = By.XPath("//*[contains(@id,'ourchive-footer')]");
 
     private static By login = By.Id("nav-login-link");
@@ -56,6 +58,26 @@ public class LandingPage : BasePage
         footer
     };
 
+    private List<string> loggedInUserNavItems = new(){
+        "New Work",
+        "Import Work(s)",
+        "Import Status",
+        "New Collection",
+        "Bookmarks",
+        "Collections",
+        "Works",
+        "Subscriptions",
+        "Bookmarks",
+        "Collections",
+        "Profile",
+        "Edit Profile",
+        "Edit Account",
+        "Blocklist",
+        "Notifications",
+        "Log Out"
+
+    };
+
 
     override protected string url_segment => "";
 
@@ -88,6 +110,42 @@ public class LandingPage : BasePage
         // Page encapsulation to manage profile functionality
         //return new LandingPage(this.driver);
     }
+    public bool validateUserNavList()
+    {
+
+        var userNavList = this.driver.FindElements(navUserListItems);
+        foreach (var item in userNavList)
+        {
+            Console.WriteLine(item.GetType().ToString());
+            Console.WriteLine(item.Text);
+
+            Assert.Contains(item.Text, loggedInUserNavItems, $"Expected to find {item.Text} among loggedInUserNavItems");
+        }
+
+        return true;
+
+
+    }
+
+    public bool openRightNav()
+    {
+        var userProfileMenu = this.driver.FindElement(navUsername);
+        Console.WriteLine($"Aria Expanded?: {userProfileMenu.GetAttribute("aria-expanded")}");
+        Actions actions = new Actions(this.driver);
+        actions.MoveToElement(userProfileMenu).Perform();
+        Console.WriteLine($"Aria Expanded?: {userProfileMenu.GetAttribute("aria-expanded")}");
+        if (userProfileMenu.GetAttribute("aria-expanded") == "true")
+        {
+            Console.WriteLine("Nav is Open");
+            return validateUserNavList();
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
 
     public bool IsThemeModeDark()
     {

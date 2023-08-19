@@ -70,7 +70,24 @@ namespace ui_tests
             home.validateLoggedInUser("kate");
         }
 
+        [Test]
+        /// <summary>
+        /// tests that landing page and loading pages load, and user can log in with a valid username/pw
+        /// </summary>
+        public void CanLoginAndLogout()
+        {
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            string username = TestContext.Parameters["webAppUserName"];
+            string password = TestContext.Parameters["webAppPassword"];
+            pages.LandingPage home = new(_webDriver, baseUrl);
+            pages.LoginPage login = new(_webDriver, baseUrl);
 
+            login.DoFillLoginForm(username, password, true);
+            home.validateLoggedInUser("kate");
+            Assert.IsTrue(home.openRightNav());
+
+        }
+        //nav-signout-link
 
         [Test]
         public void CanToggleThemeModeLoggedOut()
