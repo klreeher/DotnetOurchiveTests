@@ -60,7 +60,34 @@ namespace ui_tests
         /// </summary>
         public void CanLoginPage()
         {
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            string username = TestContext.Parameters["webAppUserName"];
+            string password = TestContext.Parameters["webAppPassword"];
+            pages.LandingPage home = new(_webDriver, baseUrl);
+            pages.LoginPage login = new(_webDriver, baseUrl);
 
+            login.DoFillLoginForm(username, password, true);
+            home.validateLoggedInUser("kate");
+        }
+
+
+
+        [Test]
+        public void CanToggleThemeModeLoggedOut()
+        {
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            pages.LandingPage home = new(_webDriver, baseUrl);
+            var darkMode = home.IsThemeModeDark();
+            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
+            home.ChangeTheme();
+            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
+            Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
+
+        }
+
+        [Test]
+        public void CanToggleThemeModeLoggedIn()
+        {
             Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             string username = TestContext.Parameters["webAppUserName"];
             string password = TestContext.Parameters["webAppPassword"];
@@ -70,21 +97,11 @@ namespace ui_tests
             login.DoFillLoginForm(username, password, true);
             home.validateLoggedInUser("kate");
 
-        }
-
-
-
-        [Test]
-        public void CanToggleThemeMode()
-        {
-
-            pages.LandingPage home = new(_webDriver, baseUrl);
             var darkMode = home.IsThemeModeDark();
             Console.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
             home.ChangeTheme();
             Console.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
             Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
-
 
         }
     }
