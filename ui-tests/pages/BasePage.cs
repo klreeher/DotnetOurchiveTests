@@ -50,6 +50,7 @@ public abstract class BasePage
         wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(ElementNotVisibleException));
         var element = wait.Until<IWebElement>(x =>
         {
+            Console.WriteLine($"Looking for {_locator}...");
             var e = _driver.FindElement(_locator);
             if (e.Displayed)
             {
@@ -64,6 +65,6 @@ public abstract class BasePage
 
         });
 
-    
+
     }
 }

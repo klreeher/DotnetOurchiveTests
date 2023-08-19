@@ -77,7 +77,7 @@ public class LandingPage : BasePage
     }
 
 
-    public void loggedInUser(string loggedInUser)
+    public void validateLoggedInUser(string loggedInUser)
     {
         this.waitForLoad(this.driver, loginSuccess);
 
@@ -87,17 +87,25 @@ public class LandingPage : BasePage
 
         // Page encapsulation to manage profile functionality
         //return new LandingPage(this.driver);
-
     }
 
     public bool IsThemeModeDark()
     {
         var toggleIcon = this.driver.FindElement(themeModeToggle);
         Console.WriteLine($"Toggle Icon: {toggleIcon.Displayed} / {toggleIcon.GetAttribute("id")}");
-        if (toggleIcon.Displayed && (toggleIcon.GetAttribute("id").Contains("light")))
+        if (toggleIcon.Displayed)
         {
-            Console.WriteLine(toggleIcon.GetAttribute("title"));
-            return false;
+            if (driver.FindElements(darkThemeMode).Count > 0)
+            {
+                if (driver.FindElement(darkThemeMode).Enabled)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         return true;

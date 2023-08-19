@@ -2,10 +2,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System.IO;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
 
 
 namespace ui_tests
@@ -32,7 +29,7 @@ namespace ui_tests
             baseUrl = TestContext.Parameters["webAppUrl"];
             // Call virtual method now...
             _webDriver = this.GetDriver();
-            TestContext.WriteLine(baseUrl);
+            TestContext.WriteLine($"Base Url: {baseUrl}");
         }
 
         protected abstract WebDriver GetDriver();
@@ -46,26 +43,36 @@ namespace ui_tests
         [Test]
         public void LoadLandingPage()
         {
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             pages.LandingPage home = new(_webDriver, baseUrl);
         }
         [Test]
         public void LoadLoginPage()
         {
+
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             pages.LoginPage login = new(_webDriver, baseUrl);
         }
 
         [Test]
+        /// <summary>
+        /// tests that landing page and loading pages load, and user can log in with a valid username/pw
+        /// </summary>
         public void CanLoginPage()
         {
+
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             string username = TestContext.Parameters["webAppUserName"];
             string password = TestContext.Parameters["webAppPassword"];
             pages.LandingPage home = new(_webDriver, baseUrl);
             pages.LoginPage login = new(_webDriver, baseUrl);
-            login.DoFillLoginForm(username, password, true);
 
-            home.loggedInUser("kate");
+            login.DoFillLoginForm(username, password, true);
+            home.validateLoggedInUser("kate");
 
         }
+
+
 
         [Test]
         public void CanToggleThemeMode()
@@ -73,39 +80,13 @@ namespace ui_tests
 
             pages.LandingPage home = new(_webDriver, baseUrl);
             var darkMode = home.IsThemeModeDark();
+            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
             home.ChangeTheme();
+            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
+            Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
 
 
         }
     }
-    [TestFixture]
-    public class FirefoxTests : TestCases
-    {
-
-        protected override WebDriver GetDriver()
-        {
-            FirefoxOptions options = new();
-            options.AddArgument("--headless");
-            new DriverManager().SetUpDriver(new FirefoxConfig());
-            _webDriver = new FirefoxDriver(options);
-            return _webDriver;
-        }
-    }
-
-    [TestFixture]
-    public class ChromeTests : TestCases
-    {
-        protected override WebDriver GetDriver()
-        {
-            ChromeOptions options = new();
-            options.AddArgument("--headless");
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            _webDriver = new ChromeDriver(options);
-            return _webDriver;
-
-        }
-    }
-
-
 
 }
