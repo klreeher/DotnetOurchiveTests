@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -15,8 +17,11 @@ namespace ui_tests
     /// </summary>
     public abstract class TestCases
     {
+
+        private string baseUrl;
+        public TestContext TestContext { get; set; }
+
         protected WebDriver _webDriver;
-        string baseUrl = "https://ourchive-dev.stopthatimp.net/";
 
 
         [SetUp]
@@ -24,8 +29,10 @@ namespace ui_tests
         {
             // Do required work
 
+            baseUrl = TestContext.Parameters["webAppUrl"];
             // Call virtual method now...
             _webDriver = this.GetDriver();
+            TestContext.WriteLine(baseUrl);
         }
 
         protected abstract WebDriver GetDriver();
@@ -50,9 +57,11 @@ namespace ui_tests
         [Test]
         public void CanLoginPage()
         {
+            string username = TestContext.Parameters["webAppUserName"];
+            string password = TestContext.Parameters["webAppPassword"];
             pages.LandingPage home = new(_webDriver, baseUrl);
             pages.LoginPage login = new(_webDriver, baseUrl);
-            login.DoFillLoginForm("kate", "QJX.pgd!qwd4nqy.xwb", true);
+            login.DoFillLoginForm(username, password, true);
 
             home.loggedInUser("kate");
 
@@ -75,8 +84,10 @@ namespace ui_tests
 
         protected override WebDriver GetDriver()
         {
+            FirefoxOptions options = new();
+            options.AddArgument("--headless");
             new DriverManager().SetUpDriver(new FirefoxConfig());
-            _webDriver = new FirefoxDriver();
+            _webDriver = new FirefoxDriver(options);
             return _webDriver;
         }
     }
@@ -86,9 +97,10 @@ namespace ui_tests
     {
         protected override WebDriver GetDriver()
         {
-
+            ChromeOptions options = new();
+            options.AddArgument("--headless");
             new DriverManager().SetUpDriver(new ChromeConfig());
-            _webDriver = new ChromeDriver();
+            _webDriver = new ChromeDriver(options);
             return _webDriver;
 
         }
