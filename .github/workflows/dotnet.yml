@@ -37,5 +37,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test -s:ui-tests/dev.runsettings --logger:trx -- TestRunParameters.Parameter(name=\"webAppUrl\", value=\"${{ vars.webAppUrl }}") -- TestRunParameters.Parameter(name=\"webAppUserName\", value=\"${{ secrets.webAppUserName }}") -- TestRunParameters.Parameter(name=\"webAppPassword\", value=\"${{ secrets.webAppPassword }}") -- TestRunParameters.Parameter(name=\"runHeadless\", value=\"${{ vars.runHeadless }}")
+      run: dotnet test -s:ui-tests/default.runsettings --logger:trx
   
