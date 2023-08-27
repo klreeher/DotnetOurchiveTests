@@ -27,6 +27,8 @@ namespace ui_tests
                 if (isCi.Equals("CI"))
                 {
                     options.AddArguments(new string[]{
+                         "--remote-debugging-port=9222",
+                         "--start-maximized",
                          "--disable-gpu",
                          "--window-size=1920,1200",
                          "--ignore-certificate-errors",

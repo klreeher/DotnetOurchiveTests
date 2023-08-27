@@ -87,7 +87,7 @@ namespace ui_tests
             pages.LoginPage login = new(_webDriver, baseUrl);
 
             login.DoFillLoginForm(username, password, true);
-            home.validateLoggedInUser("kate");
+            home.validateLoggedInUser(username);
             Assert.IsTrue(home.openRightNav());
 
         }
