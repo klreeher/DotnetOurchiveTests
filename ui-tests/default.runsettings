@@ -19,6 +19,7 @@
     <Parameter name="webAppUrl" value="https://ourchive.io/"/>
     <Parameter name="webAppUserName" value="username" />
     <Parameter name="webAppPassword" value="password" />
+    <Parameter name="runHeadless" value="true"/>
   </TestRunParameters>
 
   <!-- Adapter Specific sections -->

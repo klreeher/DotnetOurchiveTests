@@ -16,6 +16,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - powershell: |
+       write-console(${{ vars.webAppUrl }})
+    - powershell: |
+       [xml]$doc = Get-Content ui-tests/default.runsettings
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(0).value = ${{ vars.webAppUrl }}
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(1).value = ${{ secrets.webAppUserName }}
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(2).value = ${{ secrets.webAppPassword }}
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(3).value = ${{ vars.runHeadless }}
+       $doc.Save("$(Build.SourcesDirectory)/Tests/UpdatedSettings.runsettings")
+      displayName: 'Override TestRunParameters'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
