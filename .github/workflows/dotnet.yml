@@ -44,7 +44,7 @@ jobs:
       if: always()
       with:
         files: |
-          TestResults/**/*.xml
-          TestResults/**/*.trx
-          TestResults/**/*.json
+          ${{ runner.temp }}/TestResults/**/*.xml
+          ${{ runner.temp }}/TestResults/**/*.trx
+          ${{ runner.temp }}/TestResults/**/*.json
   

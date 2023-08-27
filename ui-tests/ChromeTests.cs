@@ -20,6 +20,13 @@ namespace ui_tests
                 options.AddArgument("disable-gpu");
             }
 
+            string isCi = Environment.GetEnvironmentVariable("CI");
+
+            if (isCi.Equals("CI"))
+            {
+                options.AddArgument("--remote-debugging-port=9222");
+                options.BinaryLocation = "/usr/bin/google-chrome";
+            }
             new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
             _webDriver = new ChromeDriver(options);
             return _webDriver;
