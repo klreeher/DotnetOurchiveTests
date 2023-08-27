@@ -28,8 +28,12 @@ namespace ui_tests
         {
             baseUrl = TestContext.Parameters["webAppUrl"];
             runHeadless = bool.Parse(TestContext.Parameters["runHeadless"]);
-            _webDriver = this.GetDriver(runHeadless);
+
+
             TestContext.WriteLine($"Base Url: {baseUrl}");
+
+            TestContext.WriteLine($"runHeadless? {runHeadless.ToString()}");
+            _webDriver = this.GetDriver(runHeadless);
         }
 
         protected abstract WebDriver GetDriver(bool runHeadless);

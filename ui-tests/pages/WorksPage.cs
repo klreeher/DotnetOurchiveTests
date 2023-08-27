@@ -34,12 +34,30 @@ public class WorksPage : BasePage
     /// this should eventually be replaced with api calls to get the instance's configured data. 
     /// this is currently hardcoded to the ourchive-dev site values
     /// </summary>
-    Dictionary<string, List<string>> configData = new Dictionary<string, List<string>>
+    Dictionary<string, List<string>> adminAttribs = new Dictionary<string, List<string>>
     {
         { "workTypes",  new List<string>{"Podfic", "Fic", "Art"} },
     };
 
+    /// <summary>
+    /// this should eventually be replaced with api calls to get the instance's configured data. 
+    /// this is currently hardcoded to the ourchive-dev site values
+    /// </summary>
+    Dictionary<string, List<string>> systemTags = new Dictionary<string, List<string>>
+    {
+        { "genre",  new List<string>{"Adventure", "isekai", "Romance"} },
+        { "pairingType",  new List<string>{"F/F", "F/M", "M/M"} },
+    };
 
+
+    /// <summary>
+    /// this should eventually be replaced with api calls to get the instance's configured data. 
+    /// this is currently hardcoded to the ourchive-dev site values
+    /// </summary>
+    Dictionary<string, List<string>> dynamicTags = new Dictionary<string, List<string>>
+    {
+        { "workTypes",  new List<string>{"Podfic", "Fic", "Art"} },
+    };
     public WorksPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
     {
 

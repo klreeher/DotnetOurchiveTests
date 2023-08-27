@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager;
@@ -12,29 +13,36 @@ namespace ui_tests
         protected override WebDriver GetDriver(bool runHeadless)
         {
             ChromeOptions options = new();
-
             if (runHeadless)
             {
                 options.AddArgument("--headless");
-                options.AddArgument("window-size=1920x1080");
-                options.AddArgument("disable-gpu");
+                //options.AddArgument("window-size=1920x1080");
+                //options.AddArgument("disable-gpu");
             }
 
-            string isCi = Environment.GetEnvironmentVariable("CI");
-
-            if (isCi.Equals("CI"))
+            if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI")))
             {
-                options.AddArguments(new string[]{
-                     "--disable-gpu",
-                     "--window-size=1920,1200",
-                     "--ignore-certificate-errors",
-                     "--disable-extensions",
-                     "--no-sandbox",
-                     "--disable-dev-shm-usage"
-                });
-                options.BinaryLocation = "/usr/bin/google-chrome";
+                string isCi = Environment.GetEnvironmentVariable("CI");
+
+                if (isCi.Equals("CI"))
+                {
+                    options.AddArguments(new string[]{
+                         "--disable-gpu",
+                         "--window-size=1920,1200",
+                         "--ignore-certificate-errors",
+                         "--disable-extensions",
+                         "--no-sandbox",
+                         "--disable-dev-shm-usage"
+                    });
+                }
             }
-            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+
+
+
+            TestContext.WriteLine("STARTING CHROME BROWSER:");
+            TestContext.WriteLine(JsonConvert.SerializeObject(options, Formatting.Indented));
+
+            new DriverManager().SetUpDriver(new ChromeConfig());
             _webDriver = new ChromeDriver(options);
             return _webDriver;
 
