@@ -47,7 +47,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test ui-tests/ui-tests.csproj -s:${{ runner.temp }}/UpdatedSettings.runsettings --logger:trx
+      run: dotnet test ui-tests/ui-tests.csproj -s:${{ runner.temp }}/UpdatedSettings.runsettings --logger:trx --results-directory:${{ runner.temp }}/TestResults
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2

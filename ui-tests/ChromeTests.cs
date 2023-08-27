@@ -24,7 +24,14 @@ namespace ui_tests
 
             if (isCi.Equals("CI"))
             {
-                options.AddArgument("--remote-debugging-port=9222");
+                options.AddArguments(new string[]{
+                     "--disable-gpu",
+                     "--window-size=1920,1200",
+                     "--ignore-certificate-errors",
+                     "--disable-extensions",
+                     "--no-sandbox",
+                     "--disable-dev-shm-usage"
+                });
                 options.BinaryLocation = "/usr/bin/google-chrome";
             }
             new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
