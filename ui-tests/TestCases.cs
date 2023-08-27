@@ -20,19 +20,19 @@ namespace ui_tests
 
         protected WebDriver _webDriver;
 
+        public bool runHeadless { get; set; } = false;
+
 
         [SetUp]
         public void SetUp() // Non-virtual
         {
-            // Do required work
-
             baseUrl = TestContext.Parameters["webAppUrl"];
-            // Call virtual method now...
-            _webDriver = this.GetDriver();
+            runHeadless = bool.Parse(TestContext.Parameters["runHeadless"]);
+            _webDriver = this.GetDriver(runHeadless);
             TestContext.WriteLine($"Base Url: {baseUrl}");
         }
 
-        protected abstract WebDriver GetDriver();
+        protected abstract WebDriver GetDriver(bool runHeadless);
 
         [TearDown]
         public void TearDown()

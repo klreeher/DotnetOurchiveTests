@@ -9,10 +9,17 @@ namespace ui_tests
     [TestFixture]
     public class ChromeTests : TestCases
     {
-        protected override WebDriver GetDriver()
+        protected override WebDriver GetDriver(bool runHeadless)
         {
             ChromeOptions options = new();
-            options.AddArgument("--headless");
+
+            if (runHeadless)
+            {
+                options.AddArgument("--headless");
+                options.AddArgument("window-size=1920x1080");
+                options.AddArgument("disable-gpu");
+            }
+
             new DriverManager().SetUpDriver(new ChromeConfig());
             _webDriver = new ChromeDriver(options);
             return _webDriver;

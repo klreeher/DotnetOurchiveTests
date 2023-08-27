@@ -10,12 +10,18 @@ namespace ui_tests
     public class FirefoxTests : TestCases
     {
 
-        protected override WebDriver GetDriver()
+
+        protected override WebDriver GetDriver(bool runHeadless)
         {
             FirefoxOptions options = new();
-            //options.AddArgument("--headless");
-            //options.AddArgument("window-size=1920x1080");
-            //options.AddArgument("disable-gpu");
+
+            if (runHeadless)
+            {
+                options.AddArgument("--headless");
+                options.AddArgument("window-size=1920x1080");
+                options.AddArgument("disable-gpu");
+            }
+
             new DriverManager().SetUpDriver(new FirefoxConfig());
             _webDriver = new FirefoxDriver(options);
             return _webDriver;
