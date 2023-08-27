@@ -67,7 +67,7 @@ namespace ui_tests
             pages.LoginPage login = new(_webDriver, baseUrl);
 
             login.DoFillLoginForm(username, password, true);
-            home.validateLoggedInUser("kate");
+            home.validateLoggedInUser(username);
         }
 
         [Test]
@@ -121,6 +121,7 @@ namespace ui_tests
             Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
 
         }
+
     }
 
 }

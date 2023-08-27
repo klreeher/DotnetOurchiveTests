@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
-
+using WebDriverManager.Helpers;
 
 namespace ui_tests
 {
@@ -22,7 +22,7 @@ namespace ui_tests
                 options.AddArgument("disable-gpu");
             }
 
-            new DriverManager().SetUpDriver(new FirefoxConfig());
+            new DriverManager().SetUpDriver(new FirefoxConfig(), VersionResolveStrategy.MatchingBrowser);
             _webDriver = new FirefoxDriver(options);
             return _webDriver;
         }

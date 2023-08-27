@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
-
+using WebDriverManager.Helpers;
 
 namespace ui_tests
 {
@@ -20,7 +20,7 @@ namespace ui_tests
                 options.AddArgument("disable-gpu");
             }
 
-            new DriverManager().SetUpDriver(new ChromeConfig());
+            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
             _webDriver = new ChromeDriver(options);
             return _webDriver;
 

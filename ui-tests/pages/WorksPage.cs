@@ -30,6 +30,16 @@ public class WorksPage : BasePage
 
     override protected string url_segment => "works/new";
 
+    /// <summary>
+    /// this should eventually be replaced with api calls to get the instance's configured data. 
+    /// this is currently hardcoded to the ourchive-dev site values
+    /// </summary>
+    Dictionary<string, List<string>> configData = new Dictionary<string, List<string>>
+    {
+        { "workTypes",  new List<string>{"Podfic", "Fic", "Art"} },
+    };
+
+
     public WorksPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
     {
 
