@@ -21,3 +21,15 @@ with filtering:
 `dotnet test ui-tests.csproj -s:dev.runsettings --filter "FullyQualifiedName~CanLoginAndLogout"
 `
 
+### github actions runner
+
+currently overriding all runsettings via cli, using github secrets/vars
+
+${{ vars.webAppUrl }}
+${{ vars.runHeadless }}
+${{ secrets.webAppUserName }}
+${{ secrets.webAppPassword }}
+`-- TestRunParameters.Parameter(name=\"webAppUrl\", value=\"${{ vars.webAppUrl }}")
+-- TestRunParameters.Parameter(name=\"webAppUserName\", value=\"${{ secrets.webAppUserName }}")
+-- TestRunParameters.Parameter(name=\"webAppPassword\", value=\"${{ secrets.webAppPassword }}")
+-- TestRunParameters.Parameter(name=\"runHeadless\", value=\"${{ vars.runHeadless }}")`

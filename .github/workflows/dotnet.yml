@@ -16,6 +16,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - powershell: |
+       write-console(${{ vars.webAppUrl }})
+    - powershell: |
+       [xml]$doc = Get-Content ui-tests/default.runsettings
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(0).value = ${{ vars.webAppUrl }}
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(1).value = ${{ secrets.webAppUserName }}
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(2).value = ${{ secrets.webAppPassword }}
+       $doc.RunSettings.TestRunParameters.ChildNodes.Item(3).value = ${{ vars.runHeadless }}
+       $doc.Save("$(Build.SourcesDirectory)/Tests/UpdatedSettings.runsettings")
+      displayName: 'Override TestRunParameters'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -25,4 +35,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test -s:ui-tests/dev.runsettings --logger:trx -- TestRunParameters.Parameter(name=\"webAppUrl\", value=\"${{ vars.webAppUrl }}") -- TestRunParameters.Parameter(name=\"webAppUserName\", value=\"${{ secrets.webAppUserName }}") -- TestRunParameters.Parameter(name=\"webAppPassword\", value=\"${{ secrets.webAppPassword }}") -- TestRunParameters.Parameter(name=\"runHeadless\", value=\"${{ vars.runHeadless }}")
+  
