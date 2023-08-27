@@ -17,3 +17,7 @@ using test runsettings for specific settings (https://docs.nunit.org/articles/vs
 ### run via dotnet csproj/sln
 `dotnet test ui-tests.csproj -s:dev.runsettings`
 
+with filtering:
+`dotnet test ui-tests.csproj -s:dev.runsettings --filter "FullyQualifiedName~CanLoginAndLogout"
+`
+
