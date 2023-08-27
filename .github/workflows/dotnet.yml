@@ -26,7 +26,7 @@ jobs:
         $doc.RunSettings.TestRunParameters.ChildNodes.Item(1).value = '${{ secrets.webAppUserName }}'
         $doc.RunSettings.TestRunParameters.ChildNodes.Item(2).value = '${{ secrets.webAppPassword }}'
         $doc.RunSettings.TestRunParameters.ChildNodes.Item(3).value = '${{ vars.runHeadless }}'
-        $doc.Save("$(Build.SourcesDirectory)/Tests/UpdatedSettings.runsettings")
+        $doc.Save("${{ runner.temp }}/UpdatedSettings.runsettings")
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -37,5 +37,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test -s:ui-tests/default.runsettings --logger:trx
+      run: dotnet test -s:${{ runner.temp }}/UpdatedSettings.runsettings --logger:trx
   
