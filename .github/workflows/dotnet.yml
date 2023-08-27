@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: show var
       run: |
-        write-console(${{ vars.webAppUrl }})
+        Write-Output "${{ vars.webAppUrl }}"
     - name: Customize runsettings
       run: |
         [xml]$doc = Get-Content ui-tests/default.runsettings
