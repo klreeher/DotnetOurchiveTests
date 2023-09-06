@@ -13,11 +13,11 @@ steps:
   - script:|
       cd $(Pipeline.Workspace)
       ls
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Pipeline.Workspace)/dotnet-ourchive.sln'
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    publishLocation: 'pipeline'
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      projects: '$(Pipeline.Workspace)/dotnet-ourchive.sln'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)'
+      publishLocation: 'pipeline'
