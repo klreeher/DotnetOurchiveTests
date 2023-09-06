@@ -61,6 +61,9 @@ jobs:
             displayName: 'Override TestRunParameters'
           - script: |
               cat $(Build.SourcesDirectory)/UpdatedSettings.runsettings
+          - script: |
+              cd $(System.DefaultWorkingDirectory)
+              ls 
           - task: VSTest@2
             inputs:
               testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
