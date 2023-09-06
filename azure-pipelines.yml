@@ -51,10 +51,10 @@ jobs:
               destinationFolder: '$(System.DefaultWorkingDirectory)'
           - powershell: |
               [xml]$doc = Get-Content $(runsettings.secureFilePath)
-              $doc.RunSettings.TestRunParameters.ChildNodes.Item(0).value = '${env:WEBAPPURL}'
-              $doc.RunSettings.TestRunParameters.ChildNodes.Item(1).value = '${env:WEBAPPUSERNAME}'
-              $doc.RunSettings.TestRunParameters.ChildNodes.Item(2).value = '${env:WEBAPPPASSWORD}'
-              $doc.RunSettings.TestRunParameters.ChildNodes.Item(3).value = '${env:RUNHEADLESS}'
+              $doc.RunSettings.TestRunParameters.ChildNodes.Item(0).value = '$(webAppUrl)'
+              $doc.RunSettings.TestRunParameters.ChildNodes.Item(1).value = '$(webAppUsername)'
+              $doc.RunSettings.TestRunParameters.ChildNodes.Item(2).value = '$(webAppPassword)'
+              $doc.RunSettings.TestRunParameters.ChildNodes.Item(3).value = '$(runHeadless)'
               
               $doc.Save("$(Build.SourcesDirectory)/UpdatedSettings.runsettings")
             displayName: 'Override TestRunParameters'
