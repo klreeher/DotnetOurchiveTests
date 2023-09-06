@@ -43,11 +43,11 @@ jobs:
           - download: current
             artifact: ui-tests
           - script: |
-              cd $(Agent.BuildDirectory)
+              cd $(Agent.BuildDirectory)/ui-tests
               ls 
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: '$(System.DefaultWorkingDirectory)/*.zip' 
+              archiveFilePatterns: '$(Agent.BuildDirectory)/*.zip' 
               destinationFolder: '$(System.DefaultWorkingDirectory)' 
         deploy:
           steps:
