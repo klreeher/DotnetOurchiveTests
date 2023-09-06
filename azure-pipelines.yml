@@ -44,9 +44,8 @@ jobs:
               ls 
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: '$(Agent.BuildDirectory)/*.zip' # string. Required. Archive file patterns. Default: **/*.zip.
-              destinationFolder: '$(Agent.BuildDirectory)' # string. Required. Destination folder. 
-
+              archiveFilePatterns: '$(System.DefaultWorkingDirectory)/*.zip' 
+              destinationFolder: '$(System.DefaultWorkingDirectory)' 
         deploy:
           steps:
           - task: DownloadSecureFile@1
