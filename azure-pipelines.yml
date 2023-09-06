@@ -29,6 +29,7 @@ jobs:
           targetPath: '$(Build.ArtifactStagingDirectory)'
           publishLocation: 'pipeline'
           patterns: '**/*.zip'
+          artifact: ui-tests
   - deployment: runUITests # Required as first property. Name of the deployment job, A-Z, a-z, 0-9, and underscore. The word deploy is a keyword and is unsupported as the deployment name.
     displayName: Run UI Tests Against Ourchive-Dev # Human-readable name for the deployment.
     dependsOn: build 
@@ -39,6 +40,8 @@ jobs:
       runOnce:
         preDeploy:
           steps:
+          - download: current
+            artifact: ui-tests
           - script: |
               cd $(Agent.BuildDirectory)
               ls 
