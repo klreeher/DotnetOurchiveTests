@@ -8,24 +8,25 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-
-steps:
-  - script: |
-      cd $(Build.SourcesDirectory)
-      ls
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'build'
-      projects: '$(Build.SourcesDirectory)/dotnet-ourchive.sln'
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      projects: '**/**/*.csproj'
-      arguments: '-o $(Build.ArtifactStagingDirectory)'
-      zipAfterPublish: true # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
-      modifyOutputPath: true # boolean. Optional. Use when command = publish. Add project's folder name to publish path. Default: true.
-    
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: '$(Build.ArtifactStagingDirectory)'
-      publishLocation: 'pipeline'
+jobs:
+  job:
+    steps:
+      - script: |
+          cd $(Build.SourcesDirectory)
+          ls
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: '$(Build.SourcesDirectory)/dotnet-ourchive.sln'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'publish'
+          projects: '$(Build.SourcesDirectory)/ui-tests/*.csproj'
+          arguments: '-c Release /p:PublishProfile=$(Build.SourcesDirectory)/ui-tests/Properties/PublishProfiles/FolderProfile.pubxml -o $(Build.ArtifactStagingDirectory)'
+          zipAfterPublish: true # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
+          modifyOutputPath: true # boolean. Optional. Use when command = publish. Add project's folder name to publish path. Default: true.
+        
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          publishLocation: 'pipeline'
