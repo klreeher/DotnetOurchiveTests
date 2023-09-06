@@ -12,10 +12,6 @@ pool:
 steps:
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'restore'
-    projects: '$(Pipeline.Workspace)/dotnet-ourchive.sln'
-- task: DotNetCoreCLI@2
-  inputs:
     command: 'build'
     projects: '$(Pipeline.Workspace)/dotnet-ourchive.sln'
 - task: PublishPipelineArtifact@1

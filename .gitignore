@@ -2,3 +2,6 @@
 **/bin/*
 
 **/*.runsettings
+
+# ignore visual studio files
+**/.vs
