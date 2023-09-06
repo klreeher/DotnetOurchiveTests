@@ -20,7 +20,7 @@ steps:
   - task: DotNetCoreCLI@2
     inputs:
       command: 'publish'
-      projects: '$(Build.SourcesDirectory)/dotnet-ourchive.sln'
+      projects: '**/*.csproj'
       arguments: '-o $(Build.ArtifactStagingDirectory)'
       zipAfterPublish: true # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
       modifyOutputPath: true # boolean. Optional. Use when command = publish. Add project's folder name to publish path. Default: true.
