@@ -11,6 +11,9 @@ pool:
 jobs:
   - job: build
     steps:
+      - task: UseDotNet@2
+        inputs:
+          version: '6.x'
       - task: DotNetCoreCLI@2
         inputs:
           command: 'build'
@@ -40,6 +43,9 @@ jobs:
       runOnce:
         deploy:
           steps:
+          - task: UseDotNet@2
+            inputs:
+              version: '6.x'
           - task: DownloadSecureFile@1
             name: runsettings
             displayName: 'Download Default Runsettings'
