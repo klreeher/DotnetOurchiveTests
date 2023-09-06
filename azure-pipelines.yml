@@ -38,17 +38,6 @@ jobs:
     environment: ourchive-dev 
     strategy:
       runOnce:
-        preDeploy:
-          steps:
-          - download: current
-            artifact: ui-tests
-          - script: |
-              cd $(Agent.BuildDirectory)/ui-tests
-              ls 
-          - task: ExtractFiles@1
-            inputs:
-              archiveFilePatterns: '$(Agent.BuildDirectory)/ui-tests/*.zip' 
-              destinationFolder: '$(System.DefaultWorkingDirectory)' 
         deploy:
           steps:
           - task: DownloadSecureFile@1
@@ -56,3 +45,7 @@ jobs:
             displayName: 'Download Default Runsettings'
             inputs:
               secureFile: 'default.runsettings'
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: '$(Agent.BuildDirectory)/ui-tests/*.zip' 
+              destinationFolder: '$(System.DefaultWorkingDirectory)
