@@ -60,3 +60,4 @@ jobs:
             displayName: 'Override TestRunParameters'
           - script: |
               cat $(Build.SourcesDirectory)/UpdatedSettings.runsettings
+
