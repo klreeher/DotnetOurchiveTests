@@ -34,7 +34,7 @@ jobs:
     displayName: Run UI Tests Against Ourchive-Dev # Human-readable name for the deployment.
     dependsOn: build 
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     environment: ourchive-dev 
     strategy:
       runOnce:
