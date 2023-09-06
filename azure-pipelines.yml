@@ -31,25 +31,18 @@ jobs:
           patterns: '**/*.zip'
   - deployment: runUITests # Required as first property. Name of the deployment job, A-Z, a-z, 0-9, and underscore. The word deploy is a keyword and is unsupported as the deployment name.
     displayName: Run UI Tests Against Ourchive-Dev # Human-readable name for the deployment.
-    dependsOn: build # Any jobs which must complete before this one.
-    #condition: string # Evaluate this condition expression to determine whether to run this deployment.
-    #continueOnError: string # Continue running even on failure?
-    #timeoutInMinutes: string # Time to wait for this job to complete before the server kills it.
-    #cancelTimeoutInMinutes: string # Time to wait for the job to cancel before forcibly terminating it.
-    #variables: variables | [ variable ] # Deployment-specific variables.
+    dependsOn: build 
     pool:
       vmImage: ubuntu-latest
-    environment: ourchive-dev # Target environment name and optionally a resource name to record the deployment history; format: environment-name.resource-name.
-    #workspace: # Workspace options on the agent.
-    #  clean: string # Which parts of the workspace should be scorched before fetching.
+    environment: ourchive-dev 
     strategy:
-      # default deployment strategy, more coming...
       runOnce:
-        deploy:
+        preDeploy:
           steps:
           - script: |
+              cd $(Agent.BuildDirectory)
               ls 
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: '**/*.zip' # string. Required. Archive file patterns. Default: **/*.zip.
-              destinationFolder: '$(agent.builddirectory)' # string. Required. Destination folder. 
+              archiveFilePatterns: '$(Agent.BuildDirectory)/*.zip' # string. Required. Archive file patterns. Default: **/*.zip.
+              destinationFolder: '$(Agent.BuildDirectory)' # string. Required. Destination folder. 
