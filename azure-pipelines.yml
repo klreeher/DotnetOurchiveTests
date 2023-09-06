@@ -48,7 +48,8 @@ jobs:
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: '$(Agent.BuildDirectory)/ui-tests/*.zip' 
-              #destinationFolder: '$(System.DefaultWorkingDirectory)'
+              cleanDestinationFolder: false # boolean. Clean destination folder before extracting. Default: true.
+              destinationFolder: '$(System.DefaultWorkingDirectory)'
           - powershell: |
               [xml]$doc = Get-Content $(runsettings.secureFilePath)
               $doc.RunSettings.TestRunParameters.ChildNodes.Item(0).value = '$(webAppUrl)'
