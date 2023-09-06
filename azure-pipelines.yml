@@ -10,6 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+  - script:|
+      cd $(Pipeline.Workspace)
+      ls
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
