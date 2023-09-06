@@ -47,7 +47,7 @@ jobs:
               ls 
           - task: ExtractFiles@1
             inputs:
-              archiveFilePatterns: '$(Agent.BuildDirectory)/*.zip' 
+              archiveFilePatterns: '$(Agent.BuildDirectory)/ui-tests/*.zip' 
               destinationFolder: '$(System.DefaultWorkingDirectory)' 
         deploy:
           steps:
