@@ -36,12 +36,12 @@ jobs:
     #continueOnError: string # Continue running even on failure?
     #timeoutInMinutes: string # Time to wait for this job to complete before the server kills it.
     #cancelTimeoutInMinutes: string # Time to wait for the job to cancel before forcibly terminating it.
-    variables: variables | [ variable ] # Deployment-specific variables.
+    #variables: variables | [ variable ] # Deployment-specific variables.
     pool:
       vmImage: ubuntu-latest
     environment: ourchive-dev # Target environment name and optionally a resource name to record the deployment history; format: environment-name.resource-name.
-    workspace: # Workspace options on the agent.
-      clean: string # Which parts of the workspace should be scorched before fetching.
+    #workspace: # Workspace options on the agent.
+    #  clean: string # Which parts of the workspace should be scorched before fetching.
     strategy:
       # default deployment strategy, more coming...
       runOnce:
