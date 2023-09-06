@@ -67,7 +67,7 @@ jobs:
           - task: VSTest@2
             inputs:
               testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
-              #testAssemblyVer2: # string. Required when testSelector = testAssemblies. Test files. 
+              testAssemblyVer2: 'ui-tests.dll' # string. Required when testSelector = testAssemblies. Test files. 
               searchFolder: '$(System.DefaultWorkingDirectory)' # string. Required. Search folder. Default: $(System.DefaultWorkingDirectory).
               resultsFolder: '$(Agent.TempDirectory)\TestResults' # string. Test results folder. Default: $(Agent.TempDirectory)\TestResults.
               uiTests: true # boolean. Test mix contains UI tests. Default: false.
