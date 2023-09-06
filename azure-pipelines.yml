@@ -29,5 +29,6 @@ jobs:
         
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: '$(Build.ArtifactStagingDirectory)/*.zip'
+          targetPath: '$(Build.ArtifactStagingDirectory)'
           publishLocation: 'pipeline'
+          patterns: '**/*.zip'
