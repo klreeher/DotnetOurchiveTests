@@ -48,4 +48,4 @@ jobs:
           - task: ExtractFiles@1
             inputs:
               archiveFilePatterns: '$(Agent.BuildDirectory)/ui-tests/*.zip' 
-              destinationFolder: '$(System.DefaultWorkingDirectory)
+              destinationFolder: '$(System.DefaultWorkingDirectory)'
