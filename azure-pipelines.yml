@@ -9,7 +9,7 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 jobs:
-  job:
+  - job:
     steps:
       - script: |
           cd $(Build.SourcesDirectory)
