@@ -11,12 +11,12 @@ pool:
 
 steps:
   - script:|
-      cd $(Pipeline.Workspace)
+      cd $(Build.SourcesDirectory)
       ls
   - task: DotNetCoreCLI@2
     inputs:
       command: 'build'
-      projects: '$(Pipeline.Workspace)/dotnet-ourchive.sln'
+      projects: '$(Build.SourcesDirectory)/dotnet-ourchive.sln'
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: '$(Pipeline.Workspace)'
