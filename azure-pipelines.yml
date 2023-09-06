@@ -46,3 +46,11 @@ jobs:
             inputs:
               archiveFilePatterns: '$(Agent.BuildDirectory)/*.zip' # string. Required. Archive file patterns. Default: **/*.zip.
               destinationFolder: '$(Agent.BuildDirectory)' # string. Required. Destination folder. 
+
+        deploy:
+          steps:
+          - task: DownloadSecureFile@1
+            name: runsettings
+            displayName: 'Download Default Runsettings'
+            inputs:
+              secureFile: 'default.runsettings'
