@@ -23,6 +23,7 @@ jobs:
           command: 'publish'
           projects: '$(Build.SourcesDirectory)/ui-tests/*.csproj'
           arguments: '-c Release /p:PublishProfile=$(Build.SourcesDirectory)/ui-tests/Properties/PublishProfiles/FolderProfile.pubxml -o $(Build.ArtifactStagingDirectory)'
+          publishWebProjects: false 
           zipAfterPublish: true # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
           modifyOutputPath: true # boolean. Optional. Use when command = publish. Add project's folder name to publish path. Default: true.
         
