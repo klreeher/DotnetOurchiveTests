@@ -15,8 +15,8 @@ namespace ui_tests
         protected override WebDriver GetDriver(bool runHeadless)
         {
             FirefoxOptions options = new();
-            options.EnableDevToolsProtocol = true;
             options.LogLevel = FirefoxDriverLogLevel.Error;
+           
             if (runHeadless)
             {
                 options.AddArgument("--headless");

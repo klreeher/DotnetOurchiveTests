@@ -126,6 +126,26 @@ namespace ui_tests
 
         }
 
+
+        [Test]
+
+        public void CreateWorksPage()
+        {
+            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            string username = TestContext.Parameters["webAppUserName"];
+            string password = TestContext.Parameters["webAppPassword"];
+            pages.LandingPage home = new(_webDriver, baseUrl);
+            pages.LoginPage login = new(_webDriver, baseUrl);
+
+            login.DoFillLoginForm(username, password, true);
+            home.validateLoggedInUser(username);
+            Assert.IsTrue(home.openRightNav());
+
+            pages.WorksPage works = new(_webDriver, baseUrl);
+            TestContext.WriteLine(works.AllWorkTypes);
+
+        }
+
     }
 
 }

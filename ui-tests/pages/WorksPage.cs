@@ -8,6 +8,8 @@ using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
 using OpenQA.Selenium.Interactions;
+using Flurl;
+using Flurl.Http;
 
 namespace ui_tests.pages;
 
@@ -30,38 +32,22 @@ public class WorksPage : BasePage
 
     override protected string url_segment => "works/new";
 
-    /// <summary>
-    /// this should eventually be replaced with api calls to get the instance's configured data. 
-    /// this is currently hardcoded to the ourchive-dev site values
-    /// </summary>
-    Dictionary<string, List<string>> adminAttribs = new Dictionary<string, List<string>>
-    {
-        { "workTypes",  new List<string>{"Podfic", "Fic", "Art"} },
-    };
+    public string AllWorkTypes { get; set; }
 
-    /// <summary>
-    /// this should eventually be replaced with api calls to get the instance's configured data. 
-    /// this is currently hardcoded to the ourchive-dev site values
-    /// </summary>
-    Dictionary<string, List<string>> systemTags = new Dictionary<string, List<string>>
+    public async void GetWorkTypes(string _instance_url)
     {
-        { "genre",  new List<string>{"Adventure", "isekai", "Romance"} },
-        { "pairingType",  new List<string>{"F/F", "F/M", "M/M"} },
-    };
+        AllWorkTypes = await _instance_url.AppendPathSegments("api", "worktypes").GetStringAsync();
 
 
-    /// <summary>
-    /// this should eventually be replaced with api calls to get the instance's configured data. 
-    /// this is currently hardcoded to the ourchive-dev site values
-    /// </summary>
-    Dictionary<string, List<string>> dynamicTags = new Dictionary<string, List<string>>
-    {
-        { "workTypes",  new List<string>{"Podfic", "Fic", "Art"} },
-    };
+    }
+
     public WorksPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
     {
 
+        GetWorkTypes(_instance_url);
+        Console.WriteLine(AllWorkTypes);
     }
+
 
 
     public override bool validatePage()
@@ -70,7 +56,7 @@ public class WorksPage : BasePage
         {
             this.waitForLoad(this.driver, item);
         }
-        Assert.IsTrue(this.driver.Title.Contains("Ourchive"), $"Expected {GetType().Name} Init Page Title to Contain `Ourchive` but instead found `{this.driver.Title}`");
+        Assert.IsTrue(this.driver.Title.Contains("New Work"), $"Expected {GetType().Name} Init Page Title to Contain `Ourchive` but instead found `{this.driver.Title}`");
         Assert.IsTrue(this.driver.Url.Contains(this.url_segment), $"Expected {GetType().Name} Init Url to Contain `{this.url_segment}` but instead found `{this.driver.Url}`");
         return true;
     }
