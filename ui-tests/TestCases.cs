@@ -23,7 +23,7 @@ namespace ui_tests
         public bool runHeadless { get; set; } = false;
 
 
-        [SetUp]
+        [SetUp, Description("Set Up for Test Cases -- creates driver")]
         public void SetUp() // Non-virtual
         {
             baseUrl = TestContext.Parameters["webAppUrl"];
@@ -45,12 +45,14 @@ namespace ui_tests
         }
 
         [Test]
+        [Description("The Landing Page should load successfully.")]
         public void LoadLandingPage()
         {
             Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             pages.LandingPage home = new(_webDriver, baseUrl);
         }
         [Test]
+        [Description("The Login Page Should Load successfully.")]
         public void LoadLoginPage()
         {
 
@@ -59,9 +61,7 @@ namespace ui_tests
         }
 
         [Test]
-        /// <summary>
-        /// tests that landing page and loading pages load, and user can log in with a valid username/pw
-        /// </summary>
+        [Description("tests that landing page and loading pages load, and user can log in with a valid username/pw")]
         public void CanLoginPage()
         {
             Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
@@ -75,9 +75,7 @@ namespace ui_tests
         }
 
         [Test]
-        /// <summary>
-        /// tests that landing page and loading pages load, and user can log in with a valid username/pw
-        /// </summary>
+        [Description("tests that a logged in user can log out successfully")]
         public void CanLoginAndLogout()
         {
             Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
@@ -94,6 +92,7 @@ namespace ui_tests
         //nav-signout-link
 
         [Test]
+        [Description("A logged out user can toggle the theme from dark to light mode and vice versa.")]
         public void CanToggleThemeModeLoggedOut()
         {
             Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
@@ -107,6 +106,7 @@ namespace ui_tests
         }
 
         [Test]
+        [Description("A logged in user can toggle the theme from dark to light mode and vice versa.")]
         public void CanToggleThemeModeLoggedIn()
         {
             Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
