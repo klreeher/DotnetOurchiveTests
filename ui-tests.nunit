@@ -1,0 +1,9 @@
+<NUnitProject>
+  <Settings activeconfig="Debug"/>
+  <Config name="Debug">
+    <assembly path="ui-tests\bin\Debug\net6.0\ui-tests.dll"/>
+  </Config>
+  <Config name="Release">
+    <assembly path="ui-tests\bin\Release\net6.0\ui-tests.dll"/>
+  </Config>
+</NUnitProject>
