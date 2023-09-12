@@ -33,3 +33,9 @@ ${{ secrets.webAppPassword }}
 -- TestRunParameters.Parameter(name=\"webAppUserName\", value=\"${{ secrets.webAppUserName }}")
 -- TestRunParameters.Parameter(name=\"webAppPassword\", value=\"${{ secrets.webAppPassword }}")
 -- TestRunParameters.Parameter(name=\"runHeadless\", value=\"${{ vars.runHeadless }}")`
+
+### azure ci build pipeline
+
+### test runner
+
+dotnet test path/to/your/project.csproj --logger:nunit;LogFileName=TestResults.xml -- NUnit.ShowInternalProperties=true

@@ -1,7 +1,6 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# CI Build Pipelines
+# Builds tests, publishes as a pipeline artifact
+# in deployment step, grabs the pipeline artifact and runs over ourchive-dev
 
 trigger:
 - '*'
@@ -24,14 +23,14 @@ jobs:
           projects: '$(Build.SourcesDirectory)/ui-tests/*.csproj'
           arguments: '-c Release /p:PublishProfile=$(Build.SourcesDirectory)/ui-tests/Properties/PublishProfiles/FolderProfile.pubxml -o $(Build.ArtifactStagingDirectory)'
           publishWebProjects: false 
-          zipAfterPublish: true # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
+          zipAfterPublish: false # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
           modifyOutputPath: true # boolean. Optional. Use when command = publish. Add project's folder name to publish path. Default: true.
         
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: '$(Build.ArtifactStagingDirectory)'
           publishLocation: 'pipeline'
-          patterns: '**/*.zip'
+          patterns: '**/ui-tests/*'
           artifact: ui-tests
   - deployment: runUITests # Required as first property. Name of the deployment job, A-Z, a-z, 0-9, and underscore. The word deploy is a keyword and is unsupported as the deployment name.
     displayName: Run UI Tests Against Ourchive-Dev # Human-readable name for the deployment.

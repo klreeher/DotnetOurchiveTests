@@ -10,8 +10,6 @@ namespace ui_tests
     [TestFixture]
     public class FirefoxTests : TestCases
     {
-
-
         protected override WebDriver GetDriver(bool runHeadless)
         {
             FirefoxOptions options = new();
