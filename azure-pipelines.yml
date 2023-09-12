@@ -51,7 +51,7 @@ jobs:
             inputs:
               secureFile: 'default.runsettings'
           - script: |
-              ls $(System.DefaultWorkingDirectory)/ui-tests
+              ls $(Pipeline.Workspace)/ui-tests
           - powershell: |
               [xml]$doc = Get-Content $(runsettings.secureFilePath)
               $doc.RunSettings.TestRunParameters.ChildNodes.Item(0).value = '$(webAppUrl)'
@@ -62,13 +62,13 @@ jobs:
               $doc.Save("$(Build.SourcesDirectory)/UpdatedSettings.runsettings")
             displayName: 'Override TestRunParameters'
           - script: |
-              dotnet test $(System.DefaultWorkingDirectory)/ui-tests/ui-tests/ui-tests.dll -s:$(Build.SourcesDirectory)/UpdatedSettings.runsettings --logger:nunit;LogFileName=TestResults.xml 
+              dotnet test $(Pipeline.Workspace)/ui-tests/ui-tests/ui-tests.dll -s:$(Build.SourcesDirectory)/UpdatedSettings.runsettings --logger:nunit;LogFileName=TestResults.xml 
           # Publish test results to Azure Pipelines.
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'NUnit' # 'JUnit' | 'NUnit' | 'VSTest' | 'XUnit' | 'CTest'. Alias: testRunner. Required. Test result format. Default: JUnit.
               testResultsFiles: '**/TestResults.xml' # string. Required. Test results files. Default: **/TEST-*.xml.
-              #searchFolder: '$(System.DefaultWorkingDirectory)' # string. Search folder. Default: $(System.DefaultWorkingDirectory).
+              #searchFolder: '$(Pipeline.Workspace)' # string. Search folder. Default: $(Pipeline.Workspace).
               #mergeTestResults: false # boolean. Merge test results. Default: false.
               #failTaskOnFailedTests: false # boolean. Fail if there are test failures. Default: false.
               #testRunTitle: # string. Test run title. 
@@ -80,7 +80,7 @@ jobs:
             inputs:
               testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
               testAssemblyVer2: 'ui-tests.dll' # string. Required when testSelector = testAssemblies. Test files. 
-              searchFolder: '$(System.DefaultWorkingDirectory)' # string. Required. Search folder. Default: $(System.DefaultWorkingDirectory).
+              searchFolder: '$(Pipeline.Workspace)' # string. Required. Search folder. Default: $(Pipeline.Workspace).
               resultsFolder: '$(Agent.TempDirectory)\TestResults' # string. Test results folder. Default: $(Agent.TempDirectory)\TestResults.
               uiTests: true # boolean. Test mix contains UI tests. Default: false.
             # Execution options
