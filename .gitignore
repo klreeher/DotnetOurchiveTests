@@ -5,3 +5,7 @@
 
 # ignore visual studio files
 **/.vs
+
+# ignore test results
+
+**/TestResults/

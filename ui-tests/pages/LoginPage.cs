@@ -39,6 +39,7 @@ public class LoginPage : BasePage
 
 
     override protected string url_segment => "login";
+    protected override bool requiresLogin => false;
 
     public LoginPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
     {

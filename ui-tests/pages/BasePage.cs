@@ -12,6 +12,7 @@ public abstract class BasePage
     protected string? instance_url;
 
     public abstract bool validatePage();
+    protected abstract bool requiresLogin { get; }
 
     public BasePage(WebDriver _driver, string _instance_url = "")
     {
@@ -33,13 +34,30 @@ public abstract class BasePage
             this.driver = _driver;
         }
 
+        if (requiresLogin)
+        {
 
-        var page_url = new Uri(this.instance_url);
-        page_url = new Uri(page_url, url_segment);
-        driver.Url = page_url.AbsoluteUri;
+            string username = TestContext.Parameters["webAppUserName"];
+            string password = TestContext.Parameters["webAppPassword"];
+
+
+            pages.LoginPage login = new(driver, this.instance_url);
+
+            login.DoFillLoginForm(username, password, true);
+        }
+
+        goTo();
 
         Assert.IsTrue(validatePage(), $"Expected {GetType().Name} to pass page validation.");
 
+
+    }
+
+    public void goTo()
+    {
+        var page_url = new Uri(this.instance_url);
+        page_url = new Uri(page_url, url_segment);
+        driver.Url = page_url.AbsoluteUri;
     }
 
 

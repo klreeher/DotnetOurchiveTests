@@ -12,6 +12,7 @@ namespace ui_tests
     /// TestCases class contains the test cases regardless of driver
     /// template method pattern
     /// </summary>
+    [TestFixture]
     public abstract class TestCases
     {
 
@@ -29,7 +30,6 @@ namespace ui_tests
             baseUrl = TestContext.Parameters["webAppUrl"];
             runHeadless = bool.Parse(TestContext.Parameters["runHeadless"]);
 
-
             TestContext.WriteLine($"Base Url: {baseUrl}");
 
             TestContext.WriteLine($"runHeadless? {runHeadless.ToString()}");
@@ -43,6 +43,7 @@ namespace ui_tests
         {
             _webDriver.Quit();
         }
+
 
         [Test]
         [Description("The Landing Page should load successfully.")]
@@ -123,6 +124,14 @@ namespace ui_tests
             home.ChangeTheme();
             Console.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
             Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
+
+        }
+
+        [Test]
+        public void CanLoadWorksCreatePage()
+        {
+
+            pages.WorksPage worksNew = new(_webDriver, baseUrl);
 
         }
 

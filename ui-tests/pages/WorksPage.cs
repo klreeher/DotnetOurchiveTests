@@ -29,6 +29,7 @@ public class WorksPage : BasePage
 
 
     override protected string url_segment => "works/new";
+    protected override bool requiresLogin => true;
 
     /// <summary>
     /// this should eventually be replaced with api calls to get the instance's configured data. 
@@ -63,14 +64,13 @@ public class WorksPage : BasePage
 
     }
 
-
     public override bool validatePage()
     {
         foreach (var item in onLoadElements)
         {
             this.waitForLoad(this.driver, item);
         }
-        Assert.IsTrue(this.driver.Title.Contains("Ourchive"), $"Expected {GetType().Name} Init Page Title to Contain `Ourchive` but instead found `{this.driver.Title}`");
+        Assert.IsTrue(this.driver.Title.Contains("New Work"), $"Expected {GetType().Name} Init Page Title to Contain `New Work` but instead found `{this.driver.Title}`");
         Assert.IsTrue(this.driver.Url.Contains(this.url_segment), $"Expected {GetType().Name} Init Url to Contain `{this.url_segment}` but instead found `{this.driver.Url}`");
         return true;
     }

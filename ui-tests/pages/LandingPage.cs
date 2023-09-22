@@ -80,6 +80,7 @@ public class LandingPage : BasePage
 
 
     override protected string url_segment => "";
+    protected override bool requiresLogin => false;
 
     public LandingPage(WebDriver _driver, string _instance_url = "") : base(_driver, _instance_url)
     {
