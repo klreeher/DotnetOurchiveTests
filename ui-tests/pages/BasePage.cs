@@ -45,6 +45,10 @@ public abstract class BasePage
         }
 
         goTo();
+        if (isAlertPresent())
+        {
+            Console.WriteLine("FOUND ALERTS!");
+        }
 
         Assert.IsTrue(validatePage(), $"Expected {GetType().Name} to pass page validation.");
 
@@ -56,6 +60,21 @@ public abstract class BasePage
         var page_url = new Uri(this.instance_url);
         page_url = new Uri(page_url, url_segment);
         driver.Url = page_url.AbsoluteUri;
+    }
+
+    public bool isAlertPresent()
+    {
+        var _alerts = this.driver.FindElements(By.XPath("//div[contains(@class, 'alert alert-danger no-margin')]"));
+        if (_alerts.Count() >= 1)
+        {
+            Console.WriteLine($"Found an Alert!");
+            foreach (var alert in _alerts)
+            {
+                Console.WriteLine(alert.Text);
+            }
+            return true;
+        }
+        return false;
     }
 
     private static string GenerateUniqueFileName(string baseFileName, string format)
@@ -102,10 +121,6 @@ public abstract class BasePage
             {
                 throw new NoSuchElementException($"Expected to Find {e}");
             }
-
-
         });
-
-
     }
 }

@@ -23,35 +23,6 @@ namespace ui_tests
 
         public bool runHeadless { get; set; } = false;
 
-
-        private static string GenerateUniqueFileName(string baseFileName, string format)
-        {
-            // Generate a unique timestamp
-            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-
-            // Combine the base file name with the timestamp
-            string uniqueFileName = $"{baseFileName}_{timestamp}.{format}";
-
-            // You can also add a file extension if needed
-            // For example: uniqueFileName = $"{uniqueFileName}.txt";
-
-            return uniqueFileName;
-        }
-
-        public void saveScreenshotAsAttachment(string _name = "")
-        {
-            if (string.IsNullOrWhiteSpace(_name))
-            {
-                _name = TestContext.CurrentContext.Test.FullName;//this.GetType().Name;
-            }
-
-            string unique_name = GenerateUniqueFileName(_name, "png");
-            TestContext.WriteLine($"Generate Screenshot: {unique_name}");
-            _webDriver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
-            TestContext.AddTestAttachment(unique_name);
-        }
-
-
         [SetUp, Description("Set Up for Test Cases -- creates driver")]
         public void SetUp() // Non-virtual
         {
@@ -77,7 +48,7 @@ namespace ui_tests
         [Description("The Landing Page should load successfully.")]
         public void LoadLandingPage()
         {
-            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            TestContext.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             pages.LandingPage home = new(_webDriver, baseUrl);
         }
         [Test]
@@ -85,7 +56,7 @@ namespace ui_tests
         public void LoadLoginPage()
         {
 
-            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            TestContext.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             pages.LoginPage login = new(_webDriver, baseUrl);
         }
 
@@ -93,7 +64,7 @@ namespace ui_tests
         [Description("tests that landing page and loading pages load, and user can log in with a valid username/pw")]
         public void CanLoginPage()
         {
-            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            TestContext.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             string username = TestContext.Parameters["webAppUserName"];
             string password = TestContext.Parameters["webAppPassword"];
             pages.LandingPage home = new(_webDriver, baseUrl);
@@ -107,7 +78,7 @@ namespace ui_tests
         [Description("tests that a logged in user can log out successfully")]
         public void CanLoginAndLogout()
         {
-            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            TestContext.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             string username = TestContext.Parameters["webAppUserName"];
             string password = TestContext.Parameters["webAppPassword"];
             pages.LandingPage home = new(_webDriver, baseUrl);
@@ -124,12 +95,12 @@ namespace ui_tests
         [Description("A logged out user can toggle the theme from dark to light mode and vice versa.")]
         public void CanToggleThemeModeLoggedOut()
         {
-            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            TestContext.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             pages.LandingPage home = new(_webDriver, baseUrl);
             var darkMode = home.IsThemeModeDark();
-            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
+            TestContext.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
             home.ChangeTheme();
-            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
+            TestContext.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
             Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
 
         }
@@ -138,7 +109,7 @@ namespace ui_tests
         [Description("A logged in user can toggle the theme from dark to light mode and vice versa.")]
         public void CanToggleThemeModeLoggedIn()
         {
-            Console.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
+            TestContext.WriteLine(NUnit.Framework.TestContext.CurrentContext.Test.Name);
             string username = TestContext.Parameters["webAppUserName"];
             string password = TestContext.Parameters["webAppPassword"];
             pages.LandingPage home = new(_webDriver, baseUrl);
@@ -148,9 +119,9 @@ namespace ui_tests
             home.validateLoggedInUser("kate");
 
             var darkMode = home.IsThemeModeDark();
-            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
+            TestContext.WriteLine($"Found Current Theme To Be Dark Mode?: {darkMode}");
             home.ChangeTheme();
-            Console.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
+            TestContext.WriteLine($"Found Current Theme To Be Dark Mode?: {home.IsThemeModeDark()}");
             Assert.That(home.IsThemeModeDark(), Is.Not.EqualTo(darkMode), "Expected the theme to have changed");
 
         }
@@ -159,7 +130,7 @@ namespace ui_tests
         public void CanLoadWorksCreatePage()
         {
             pages.WorksPage worksNew = new(_webDriver, baseUrl);
-            saveScreenshotAsAttachment($"{NUnit.Framework.TestContext.CurrentContext.Test.FullName}_AfterLoad");
+            worksNew.saveScreenshotAsAttachment($"{NUnit.Framework.TestContext.CurrentContext.Test.FullName}_AfterLoad");
 
         }
 
