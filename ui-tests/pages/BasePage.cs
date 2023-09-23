@@ -123,4 +123,24 @@ public abstract class BasePage
             }
         });
     }
+
+    public void waitForClickable(WebDriver _driver, By _locator)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 30));
+        wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(ElementNotVisibleException));
+        var element = wait.Until<IWebElement>(x =>
+        {
+            Console.WriteLine($"Looking for {_locator}...");
+            var e = _driver.FindElement(_locator);
+            if (e.Enabled)
+            {
+                Console.WriteLine($"{_locator} is Enabled!");
+                return e;
+            }
+            else
+            {
+                throw new NoSuchElementException($"Expected to Find {e} Enabled");
+            }
+        });
+    }
 }
