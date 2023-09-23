@@ -38,10 +38,14 @@ namespace ui_tests
             return uniqueFileName;
         }
 
-        public void saveScreenshotAsAttachment()
+        public void saveScreenshotAsAttachment(string _name = "")
         {
-            string name = this.GetType().Name;
-            string unique_name = GenerateUniqueFileName(name, "png");
+            if (string.IsNullOrWhiteSpace(_name))
+            {
+                _name = TestContext.CurrentContext.Test.FullName;//this.GetType().Name;
+            }
+
+            string unique_name = GenerateUniqueFileName(_name, "png");
             TestContext.WriteLine($"Generate Screenshot: {unique_name}");
             _webDriver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
             TestContext.AddTestAttachment(unique_name);
@@ -155,8 +159,7 @@ namespace ui_tests
         public void CanLoadWorksCreatePage()
         {
             pages.WorksPage worksNew = new(_webDriver, baseUrl);
-
-            saveScreenshotAsAttachment();
+            saveScreenshotAsAttachment($"{NUnit.Framework.TestContext.CurrentContext.Test.FullName}_AfterLoad");
 
         }
 

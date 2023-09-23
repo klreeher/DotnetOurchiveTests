@@ -36,6 +36,22 @@ ${{ secrets.webAppPassword }}
 
 ### azure ci build pipeline
 
+#### azure test attachments
+for nunit, azure has a hook to publish attachments to the test run
+
+in `TestCases.saveScreenshotAsAttachment()` this is implemented.
+
+```c#
+            _webDriver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
+            TestContext.AddTestAttachment(unique_name);
+```
+GetScreenshot().SaveAsFile() will save the screenshot to the output folder.
+TestContext.AddTestAttachment will save the file to the test as an attachment. 
+
 ### test runner
 
 dotnet test path/to/your/project.csproj --logger:nunit;LogFileName=TestResults.xml -- NUnit.ShowInternalProperties=true
+
+## ROADMAP
+
+- add an actuall logger rather than rely on writeline
