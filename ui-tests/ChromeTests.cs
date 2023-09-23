@@ -29,7 +29,6 @@ namespace ui_tests
                     options.AddArguments(new string[]{
                          "--remote-debugging-port=9222",
                          "--start-maximized",
-                         "--disable-gpu",
                          "--window-size=1920,1200",
                          "--ignore-certificate-errors",
                          "--disable-extensions",

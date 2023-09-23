@@ -32,7 +32,6 @@ namespace ui_tests
                 if (isCi.Equals("CI"))
                 {
                     options.AddArguments(new string[]{
-                         "--disable-gpu",
                          "--window-size=1920,1200",
                          "--ignore-certificate-errors",
                          "--disable-extensions",
