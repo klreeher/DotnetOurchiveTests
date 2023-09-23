@@ -29,16 +29,7 @@ namespace ui_tests
             {
                 string isCi = Environment.GetEnvironmentVariable("CI");
                 TestContext.WriteLine($"IsCI? {isCi}");
-                if (isCi.Equals("CI"))
-                {
-                    options.AddArguments(new string[]{
-                         "--window-size=1920,1200",
-                         "--ignore-certificate-errors",
-                         "--disable-extensions",
-                         "--no-sandbox",
-                         "--disable-dev-shm-usage"
-                    });
-                }
+
             }
 
 
