@@ -40,15 +40,15 @@ public abstract class BasePage
             string password = TestContext.Parameters["webAppPassword"];
 
             pages.LoginPage login = new(driver, this.instance_url);
+            if (isAlertPresent())
+            {
+                Console.WriteLine("FOUND ALERTS!");
+            }
             login.saveScreenshotAsAttachment();
             login.DoFillLoginForm(username, password, true);
         }
 
         goTo();
-        if (isAlertPresent())
-        {
-            Console.WriteLine("FOUND ALERTS!");
-        }
 
         Assert.IsTrue(validatePage(), $"Expected {GetType().Name} to pass page validation.");
 
@@ -140,6 +140,26 @@ public abstract class BasePage
             else
             {
                 throw new NoSuchElementException($"Expected to Find {e} Enabled");
+            }
+        });
+    }
+
+    public void waitForNotVisible(WebDriver _driver, By _locator)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 30));
+        wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(ElementNotVisibleException));
+        var element = wait.Until<IWebElement>(x =>
+        {
+            Console.WriteLine($"Looking for {_locator}...");
+            var e = _driver.FindElement(_locator);
+            if (e != null && !e.Displayed)
+            {
+                Console.WriteLine($"{_locator} is No Longer Visible!");
+                return e;
+            }
+            else
+            {
+                throw new ElementNotVisibleException($"Expected to Find {e} Not Visible");
             }
         });
     }
