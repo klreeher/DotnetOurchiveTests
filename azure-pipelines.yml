@@ -17,6 +17,8 @@ jobs:
         inputs:
           command: 'build'
           projects: '$(Build.SourcesDirectory)/dotnet-ourchive.sln'
+          arguments: >
+            -o "$(Build.ArtifactStagingDirectory)"
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: '$(Build.ArtifactStagingDirectory)'
