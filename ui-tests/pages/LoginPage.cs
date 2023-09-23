@@ -55,6 +55,9 @@ public class LoginPage : BasePage
     public void DoFillLoginForm(string username, string password, bool do_submit)
     {
 
+        this.waitForLoad(this.driver, input_username);
+        this.waitForLoad(this.driver, input_password);
+
         var username_input = this.driver.FindElement(input_username);
         var password_input = this.driver.FindElement(input_password);
 
