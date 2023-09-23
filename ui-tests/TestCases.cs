@@ -24,13 +24,13 @@ namespace ui_tests
         public bool runHeadless { get; set; } = false;
 
 
-        private static string GenerateUniqueFileName(string baseFileName, ScreenshotImageFormat format)
+        private static string GenerateUniqueFileName(string baseFileName, string format)
         {
             // Generate a unique timestamp
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
 
             // Combine the base file name with the timestamp
-            string uniqueFileName = $"{baseFileName}_{timestamp}.{format.ToString()}";
+            string uniqueFileName = $"{baseFileName}_{timestamp}.{format}";
 
             // You can also add a file extension if needed
             // For example: uniqueFileName = $"{uniqueFileName}.txt";
@@ -41,7 +41,7 @@ namespace ui_tests
         public void saveScreenshotAsAttachment()
         {
             string name = this.GetType().Name;
-            string unique_name = GenerateUniqueFileName(name, ScreenshotImageFormat.Png);
+            string unique_name = GenerateUniqueFileName(name, "png");
             _webDriver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
             TestContext.AddTestAttachment(unique_name);
         }
