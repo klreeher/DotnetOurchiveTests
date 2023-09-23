@@ -40,7 +40,7 @@ public abstract class BasePage
             string password = TestContext.Parameters["webAppPassword"];
 
             pages.LoginPage login = new(driver, this.instance_url);
-
+            login.saveScreenshotAsAttachment();
             login.DoFillLoginForm(username, password, true);
         }
 
@@ -58,7 +58,32 @@ public abstract class BasePage
         driver.Url = page_url.AbsoluteUri;
     }
 
+    private static string GenerateUniqueFileName(string baseFileName, string format)
+    {
+        // Generate a unique timestamp
+        string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
 
+        // Combine the base file name with the timestamp
+        string uniqueFileName = $"{baseFileName}_{timestamp}.{format}";
+
+        // You can also add a file extension if needed
+        // For example: uniqueFileName = $"{uniqueFileName}.txt";
+
+        return uniqueFileName;
+    }
+
+    public void saveScreenshotAsAttachment(string _name = "")
+    {
+        if (string.IsNullOrWhiteSpace(_name))
+        {
+            _name = TestContext.CurrentContext.Test.Name;//this.GetType().Name;
+        }
+
+        string unique_name = GenerateUniqueFileName(_name, "png");
+        TestContext.WriteLine($"Generate Screenshot: {unique_name}");
+        driver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
+        TestContext.AddTestAttachment(unique_name);
+    }
 
     public void waitForLoad(WebDriver _driver, By _locator)
     {
