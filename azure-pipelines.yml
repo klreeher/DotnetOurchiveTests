@@ -69,7 +69,7 @@ jobs:
             inputs:
               testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
               testAssemblyVer2: 'ui-tests.dll' # string. Required when testSelector = testAssemblies. Test files. 
-              searchFolder: '$(Pipeline.Workspace)' # string. Required. Search folder. Default: $(Pipeline.Workspace).
+              searchFolder: '$(Pipeline.Workspace)/ui-tests/ui-tests' # string. Required. Search folder. Default: $(Pipeline.Workspace).
               resultsFolder: '$(Agent.TempDirectory)\TestResults' # string. Test results folder. Default: $(Agent.TempDirectory)\TestResults.
               uiTests: true # boolean. Test mix contains UI tests. Default: false.
             # Execution options
