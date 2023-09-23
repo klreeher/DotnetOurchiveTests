@@ -17,21 +17,18 @@ jobs:
         inputs:
           command: 'build'
           projects: '$(Build.SourcesDirectory)/dotnet-ourchive.sln'
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'publish'
-          projects: '$(Build.SourcesDirectory)/ui-tests/*.csproj'
-          arguments: '-c Release /p:PublishProfile=$(Build.SourcesDirectory)/ui-tests/Properties/PublishProfiles/FolderProfile.pubxml -o $(Build.ArtifactStagingDirectory)'
-          publishWebProjects: false 
-          zipAfterPublish: false # boolean. Optional. Use when command = publish. Zip published projects. Default: true.
-          modifyOutputPath: true # boolean. Optional. Use when command = publish. Add project's folder name to publish path. Default: true.
-        
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: '$(Build.ArtifactStagingDirectory)'
           publishLocation: 'pipeline'
-          patterns: '**/ui-tests/'
-          artifact: ui-tests
+          patterns: '**/ChromeTests'
+          artifact: ChromeTests
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          publishLocation: 'pipeline'
+          patterns: '**/FirefoxTests'
+          artifact: FirefoxTests
   - deployment: runUITests # Required as first property. Name of the deployment job, A-Z, a-z, 0-9, and underscore. The word deploy is a keyword and is unsupported as the deployment name.
     displayName: Run UI Tests Against Ourchive-Dev # Human-readable name for the deployment.
     dependsOn: build 
