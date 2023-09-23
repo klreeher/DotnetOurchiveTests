@@ -132,7 +132,7 @@ public abstract class BasePage
         {
             Console.WriteLine($"Looking for {_locator}...");
             var e = _driver.FindElement(_locator);
-            if (e.Enabled)
+            if (e.Displayed && e.Enabled)
             {
                 Console.WriteLine($"{_locator} is Enabled!");
                 return e;
