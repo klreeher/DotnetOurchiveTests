@@ -60,6 +60,27 @@ public abstract class BasePage
         driver.Url = page_url.AbsoluteUri;
     }
 
+    private static string GenerateUniqueFileName(string baseFileName, ScreenshotImageFormat format)
+    {
+        // Generate a unique timestamp
+        string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
+        // Combine the base file name with the timestamp
+        string uniqueFileName = $"{baseFileName}_{timestamp}.{format.ToString()}";
+
+        // You can also add a file extension if needed
+        // For example: uniqueFileName = $"{uniqueFileName}.txt";
+
+        return uniqueFileName;
+    }
+
+    public void saveScreenshotAsAttachment()
+    {
+        string name = this.GetType().Name;
+        string unique_name = GenerateUniqueFileName(name, ScreenshotImageFormat.Png);
+        driver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
+        TestContext.AddTestAttachment(unique_name);
+    }
 
 
     public void waitForLoad(WebDriver _driver, By _locator)

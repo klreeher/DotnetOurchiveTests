@@ -24,6 +24,29 @@ namespace ui_tests
         public bool runHeadless { get; set; } = false;
 
 
+        private static string GenerateUniqueFileName(string baseFileName, ScreenshotImageFormat format)
+        {
+            // Generate a unique timestamp
+            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
+            // Combine the base file name with the timestamp
+            string uniqueFileName = $"{baseFileName}_{timestamp}.{format.ToString()}";
+
+            // You can also add a file extension if needed
+            // For example: uniqueFileName = $"{uniqueFileName}.txt";
+
+            return uniqueFileName;
+        }
+
+        public void saveScreenshotAsAttachment()
+        {
+            string name = this.GetType().Name;
+            string unique_name = GenerateUniqueFileName(name, ScreenshotImageFormat.Png);
+            _webDriver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
+            TestContext.AddTestAttachment(unique_name);
+        }
+
+
         [SetUp, Description("Set Up for Test Cases -- creates driver")]
         public void SetUp() // Non-virtual
         {
@@ -130,8 +153,9 @@ namespace ui_tests
         [Test]
         public void CanLoadWorksCreatePage()
         {
-
+            saveScreenshotAsAttachment();
             pages.WorksPage worksNew = new(_webDriver, baseUrl);
+            saveScreenshotAsAttachment();
 
         }
 

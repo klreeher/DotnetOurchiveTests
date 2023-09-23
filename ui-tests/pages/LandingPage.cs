@@ -185,6 +185,9 @@ public class LandingPage : BasePage
             this.waitForLoad(this.driver, darkThemeMode);
         }
         this.driver.GetScreenshot().SaveAsFile("theme_02.png", ScreenshotImageFormat.Png);
+        TestContext.AddTestAttachment("theme_01.png");
+        TestContext.AddTestAttachment("theme_02.png");
+
 
     }
 
