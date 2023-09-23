@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ui-tests", "ui-tests\ui-tests.csproj", "{61B7B888-2950-4DA7-A0AC-3E256D0BE3FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirefoxTests", "FirefoxTests\FirefoxTests.csproj", "{D8523C18-A81B-43E7-B860-CE8887EE8AC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromeTests", "ChromeTests\ChromeTests.csproj", "{9B8B211D-81F2-4C6C-8FB3-1B1BD9CC6771}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{61B7B888-2950-4DA7-A0AC-3E256D0BE3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61B7B888-2950-4DA7-A0AC-3E256D0BE3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61B7B888-2950-4DA7-A0AC-3E256D0BE3FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8523C18-A81B-43E7-B860-CE8887EE8AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8523C18-A81B-43E7-B860-CE8887EE8AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8523C18-A81B-43E7-B860-CE8887EE8AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8523C18-A81B-43E7-B860-CE8887EE8AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B8B211D-81F2-4C6C-8FB3-1B1BD9CC6771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B8B211D-81F2-4C6C-8FB3-1B1BD9CC6771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B8B211D-81F2-4C6C-8FB3-1B1BD9CC6771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B8B211D-81F2-4C6C-8FB3-1B1BD9CC6771}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

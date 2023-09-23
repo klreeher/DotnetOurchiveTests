@@ -5,10 +5,10 @@ using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
 
-namespace ui_tests
+namespace ChromeTests
 {
     [TestFixture]
-    public class ChromeTests : TestCases
+    public class ChromeTests : ui_tests.TestCases
     {
         protected override WebDriver GetDriver(bool runHeadless)
         {

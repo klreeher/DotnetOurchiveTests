@@ -5,10 +5,10 @@ using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
 
-namespace ui_tests
+namespace FirefoxTests
 {
     [TestFixture]
-    public class FirefoxTests : TestCases
+    public class FirefoxTests : ui_tests.TestCases
     {
         protected override WebDriver GetDriver(bool runHeadless)
         {
