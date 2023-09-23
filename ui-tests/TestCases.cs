@@ -42,6 +42,7 @@ namespace ui_tests
         {
             string name = this.GetType().Name;
             string unique_name = GenerateUniqueFileName(name, "png");
+            TestContext.WriteLine($"Generate Screenshot: {unique_name}");
             _webDriver.GetScreenshot().SaveAsFile(unique_name, ScreenshotImageFormat.Png);
             TestContext.AddTestAttachment(unique_name);
         }
