@@ -154,8 +154,8 @@ namespace ui_tests
         [Test]
         public void CanLoadWorksCreatePage()
         {
-            saveScreenshotAsAttachment();
             pages.WorksPage worksNew = new(_webDriver, baseUrl);
+
             saveScreenshotAsAttachment();
 
         }
