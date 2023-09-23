@@ -61,21 +61,10 @@ jobs:
             
               $doc.Save("$(Build.SourcesDirectory)/UpdatedSettings.runsettings")
             displayName: 'Override TestRunParameters'
-          - script: |
-              dotnet test $(Pipeline.Workspace)/ui-tests/ui-tests/ui-tests.dll -s:$(Build.SourcesDirectory)/UpdatedSettings.runsettings --logger:nunit;LogFileName=TestResults.xml 
+          #- script: |
+          #    dotnet test $(Pipeline.Workspace)/ui-tests/ui-tests/ui-tests.dll -s:$(Build.SourcesDirectory)/UpdatedSettings.runsettings --logger:nunit;LogFileName=TestResults.xml 
           # Publish test results to Azure Pipelines.
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFormat: 'NUnit' # 'JUnit' | 'NUnit' | 'VSTest' | 'XUnit' | 'CTest'. Alias: testRunner. Required. Test result format. Default: JUnit.
-              testResultsFiles: '**/TestResults.xml' # string. Required. Test results files. Default: **/TEST-*.xml.
-              #searchFolder: '$(Pipeline.Workspace)' # string. Search folder. Default: $(Pipeline.Workspace).
-              #mergeTestResults: false # boolean. Merge test results. Default: false.
-              #failTaskOnFailedTests: false # boolean. Fail if there are test failures. Default: false.
-              #testRunTitle: # string. Test run title. 
-            # Advanced
-              #buildPlatform: # string. Alias: platform. Build Platform. 
-              #buildConfiguration: # string. Alias: configuration. Build Configuration. 
-              #publishRunAttachments: true # boolean. Upload test results files. Default: true.
+
           - task: VSTest@2
             inputs:
               testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
