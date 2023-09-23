@@ -66,11 +66,10 @@ jobs:
           # Publish test results to Azure Pipelines.
 
           - task: VSTest@2
-            displayName: "Run ChromeTests"
             inputs:
-              testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
+              testSelector: 'testAssemblies' 
               testAssemblyVer2: 'ChromeTests.dll' # string. Required when testSelector = testAssemblies. Test files. 
-              searchFolder: '$(Pipeline.Workspace)/ChromeTests/ # string. Required. Search folder. Default: $(Pipeline.Workspace).
+              searchFolder: '$(Pipeline.Workspace)\ChromeTests\' # string. Required. Search folder. Default: $(Pipeline.Workspace).
               resultsFolder: '$(Agent.TempDirectory)\TestResults' # string. Test results folder. Default: $(Agent.TempDirectory)\TestResults.
               uiTests: true # boolean. Test mix contains UI tests. Default: false.
             # Execution options
@@ -100,13 +99,12 @@ jobs:
               publishRunAttachments: true # boolean. Upload test attachments. Default: true.
               failOnMinTestsNotRun: true # boolean. Fail the task if a minimum number of tests are not run. Default: False.
               minimumExpectedTests: '1' # string. Optional. Use when failOnMinTestsNotRun = true. Minimum #
-
+            displayName: "Run ChromeTests"
           - task: VSTest@2
-            displayName: "Run Firefox Tests"
             inputs:
               testSelector: 'testAssemblies' # 'testAssemblies' | 'testPlan' | 'testRun'. Required. Select tests using. Default: testAssemblies.
               testAssemblyVer2: 'FirefoxTests.dll' # string. Required when testSelector = testAssemblies. Test files. 
-              searchFolder: '$(Pipeline.Workspace)/FirefoxTests/ # string. Required. Search folder. Default: $(Pipeline.Workspace).
+              searchFolder: '$(Pipeline.Workspace)/FirefoxTests/' # string. Required. Search folder. Default: $(Pipeline.Workspace).
               resultsFolder: '$(Agent.TempDirectory)\TestResults' # string. Test results folder. Default: $(Agent.TempDirectory)\TestResults.
               uiTests: true # boolean. Test mix contains UI tests. Default: false.
             # Execution options
@@ -136,4 +134,4 @@ jobs:
               publishRunAttachments: true # boolean. Upload test attachments. Default: true.
               failOnMinTestsNotRun: true # boolean. Fail the task if a minimum number of tests are not run. Default: False.
               minimumExpectedTests: '1' # string. Optional. Use when failOnMinTestsNotRun = true. Minimum #
-
+            displayName: "Run Firefox Tests"
